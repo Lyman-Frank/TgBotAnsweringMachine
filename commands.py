@@ -29,17 +29,18 @@ def get_response(user_id, message_text):
 
 @client.on(events.NewMessage)
 async def auto_responder(event):
-    user_id = event.sender_id
-    print(f"New message from: {user_id}")  # Debug information
-    message_text = event.message.message
-    response = get_response(user_id, message_text)
-    
-    # Wait for a specific time (e.g., 5 minutes) before responding
-    await asyncio.sleep(3)  # 3 seconds for testing purposes, change back to 300 for 5 minutes
-    
-    if not event.is_reply:
-        print(f"Responding to: {user_id} with message: {response}")  # Debug information
-        await event.respond(response)
+    if event.is_private:  # Check if the message is from a private chat
+        user_id = event.sender_id
+        print(f"New message from: {user_id}")  # Debug information
+        message_text = event.message.message
+        response = get_response(user_id, message_text)
+        
+        # Wait for a specific time (e.g., 5 minutes) before responding
+        await asyncio.sleep(3)  # 3 seconds for testing purposes, change back to 300 for 5 minutes
+        
+        if not event.is_reply:
+            print(f"Responding to: {user_id} with message: {response}")  # Debug information
+            await event.respond(response)
 
 def start_bot():
     print("Starting bot...")  # Debug information
