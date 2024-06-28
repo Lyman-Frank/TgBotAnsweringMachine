@@ -21,7 +21,7 @@ This project is a Telegram bot that acts as an answering machine, responding to 
     ```
 4. **Set up your configuration files:**
 
-    - Create a config/config.py file with your Telegram API credentials (data for your account ![my.telegram.org](https://my.telegram.org)):
+    - Create a config/config.py file with your Telegram API credentials (data for your account [my.telegram.org](https://my.telegram.org)):
     ```bash
     API_ID = 'your_telegram_api_id'
     API_HASH = 'your_telegram_api_hash'
