@@ -15,7 +15,7 @@ with open('data/users.json', 'r') as f:
 
 def get_response(user_id):
     special_users = users.get('special_users', [])
-    user_id_str = str(user_id)  # Преобразуем user_id в строку для сравнения
+    user_id_str = str(user_id) 
     if user_id_str in special_users:
         return responses['special_users'].get(user_id_str, responses['default'])
     else:
