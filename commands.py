@@ -13,19 +13,26 @@ with open('data/responses.json', 'r') as f:
 with open('data/users.json', 'r') as f:
     users = json.load(f)
 
-def get_response(user_id):
+def get_response(user_id, message_text):
     special_users = users.get('special_users', [])
-    user_id_str = str(user_id) 
-    if user_id_str in special_users:
-        return responses['special_users'].get(user_id_str, responses['default'])
-    else:
-        return responses['default']
+    user_id_str = str(user_id)
+    message_text_lower = message_text.lower()
+
+    for keyword, response_dict in responses['keywords'].items():
+        if keyword in message_text_lower:
+            if user_id_str in special_users:
+                return response_dict.get('friend', responses['default'])
+            else:
+                return response_dict.get('default', responses['default'])
+
+    return responses['default']
 
 @client.on(events.NewMessage)
 async def auto_responder(event):
     user_id = event.sender_id
     print(f"New message from: {user_id}")  # Debug information
-    response = get_response(user_id)
+    message_text = event.message.message
+    response = get_response(user_id, message_text)
     
     # Wait for a specific time (e.g., 5 minutes) before responding
     await asyncio.sleep(3)  # 3 seconds for testing purposes, change back to 300 for 5 minutes
